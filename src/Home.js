@@ -1,6 +1,8 @@
 import React from "react";
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import { findAllByTestId } from "@testing-library/react";
+
 const styles = {
     btnCss: {
      margin:"4% 0 0 4%",
@@ -33,26 +35,26 @@ alignItems:"center",
         flexDirection:"column"
     },
     innerDiv:
-    {display:"flex",alignItems:"center",border:"1px solid blue",padding:"5%",width:"70%",height:"70vh"}
+    {borderRadius:"10px",
+     display:"flex",alignItems:"center",border:"1px solid blue",padding:"5%",width:"70%",height:"70vh"}
 }
 
 class Home extends React.Component {
     constructor(props) {
       super(props);
       this.state = { image:"",start:false, canfly:"", 
-      answer:["Yes","No","No","Yes","No","Yes","Yes","Yes","Yes","Yes","Yes","Yes"],  
+      answer:["Yes","No","Yes","No","Yes","Yes","Yes","Yes","Yes","Yes","Yes"],  
       girlAnswer:"",boyAnswer:"",
       gOut:false,
       bOut:false
     }
     }
 
-    // componentDidMount() {
-    //     this.imgID = setInterval(() => {
-    //       this.tickImg();
-    //     }, 3000);
-        
-    //   }
+    componentDidMount() {
+        this.imgID = setInterval(() => {
+          this.tickImg();
+        }, 3000);
+      }
     //   componentWillUnmount() {
     //    if(this.state.out)
     //     clearInterval(this.imgID);
@@ -103,7 +105,7 @@ class Home extends React.Component {
 <div style={styles.mainDiv}>
     <img src="/SS.png" style={{height:"250px"}}/>
 <Button variant="contained" size="medium" color="primary" style={styles.btnCss} 
-onClick={() => this.setState({start:true},()=>this.tickImg())} >
+onClick={() => this.setState({start:true})} >
           Start
         </Button>
 </div>
@@ -116,8 +118,8 @@ onClick={() => this.setState({start:true},()=>this.tickImg())} >
     <h4>Can fly : {this.state.canfly}</h4>
 <img src={this.state.image} style={styles.imgCss}></img>
 <Button variant="contained" size="medium" color="primary" style={styles.btnCss} 
-onClick={() =>this.tickImg()} >
-          Next
+onClick={() =>  this.setState({start:false})} >
+          Stop Game
         </Button>
 
 </div>
@@ -126,13 +128,17 @@ onClick={() =>this.tickImg()} >
 
 
     <div style={{display:"flex",width   :"100%",justifyContent:"center"}}>
-        <div style={{display:"flex",width:"60%",justifyContent:"center"}}>
-<img src="/girl.png" style={styles.imgCss1}/></div>
+        <div style={{display:"flex",width:"60%"}}>
+<img src="/girl.png" style={styles.imgCss1}/>
+
+{this.state.canfly === this.state.girlAnswer
+? <img src='girlhand.png' style={{height:"50px"}}/>:null}
+</div>
 <div style={{display:"flex",width:"40%",flexDirection:"column"}}>
 <span>My answer : {this.state.girlAnswer}</span>
 
 {this.state.canfly === this.state.girlAnswer  ?
-<span style={{color:"green"}}>Good</span>
+<span style={{color:"green"}}>Good</span> 
 :<span style={{color:"red"}}>Out</span>}
 </div>
 </div>
@@ -140,8 +146,11 @@ onClick={() =>this.tickImg()} >
 
 
 <div style={{display:"flex",width   :"100%",justifyContent:"center"}}>
-        <div style={{display:"flex",width:"60%",justifyContent:"center"}}>
-<img src="/boy.png" style={styles.imgCss1}/></div>
+        <div style={{display:"flex",width:"60%"}}>
+<img src="/boy.png" style={styles.imgCss1}/>
+{this.state.canfly === this.state.boyAnswer
+?<img src='girlhand.png' style={{height:"50px"}}/>:null}
+</div>
 <div style={{display:"flex",width:"40%",flexDirection:"column"}}>
 <span>My answer : {this.state.boyAnswer}</span>
 {this.state.canfly === this.state.boyAnswer  ?
