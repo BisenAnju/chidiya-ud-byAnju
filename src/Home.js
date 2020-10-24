@@ -8,28 +8,43 @@ const styles = {
     },
     imgCss:{
         width:"200px",
-        height:'200px'
+        height:'200px',
+        objectFit:"cover"
+    },
+    imgCss1:{
+        height:'150px',
     },
     container:{
 display:"flex",
 justifyContent:"center",
 alignItems:"center",
-
-    }
-    ,
+    },
     mainDiv:
     {display:"flex",justifyContent:"center",flexDirection:"column", alignItems:"center",height:"400px",width:"50%"},
     leftDiv:
     {width:"40%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column"},
+    rightDiv:
+    {
+        width:"60%",
+        height:"100%",
+        display:"flex",
+        alignItems:"center",
+        justifyContent:"space-evenly",
+        flexDirection:"column"
+    },
     innerDiv:
-    {display:"flex",alignItems:"center",border:"1px solid red",padding:"5%",width:"70%",height:"70vh"}
+    {display:"flex",alignItems:"center",border:"1px solid blue",padding:"5%",width:"70%",height:"70vh"}
 }
-
 
 class Home extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { image:"",start:false, canfly:"", answer:["yes","no"],  girlans:"",boyans:"",out:false}
+      this.state = { image:"",start:false, canfly:"", 
+      answer:["Yes","No","No","Yes","No","Yes","Yes","Yes","Yes","Yes","Yes","Yes"],  
+      girlAnswer:"",boyAnswer:"",
+      gOut:false,
+      bOut:false
+    }
     }
 
     // componentDidMount() {
@@ -43,34 +58,34 @@ class Home extends React.Component {
     //     clearInterval(this.imgID);
     //   }
     girlAnswer=()=>{
-       var girlans = this.state.answer[Math.floor(Math.random() * this.state.answer.length)];
-          this.setState({ girlans });
+       var girlAnswer = this.state.answer[Math.floor(Math.random() * this.state.answer.length)];
+          this.setState({ girlAnswer });
     }
     boyAnswer=()=>{
-        var boyans = this.state.answer[Math.floor(Math.random() * this.state.answer.length)];
-           this.setState({ boyans });
+        var boyAnswer = this.state.answer[Math.floor(Math.random() * this.state.answer.length)];
+           this.setState({ boyAnswer });
      }
       tickImg=()=> {
           var fileNames = [
-              {img:"/01.jpg",fly:"yes"},
-              {img:"/02.jpg",fly:"yes"},
-              {img:"/03.jpg",fly:"yes"},
-              {img:"/04.jpg",fly:"yes"},
-              {img:"/05.jpg",fly:"yes"},
-              {img:"/06.jpg",fly:"yes"},
-              {img:"/07.jpg",fly:"yes"},
-              {img:"/08.jpg",fly:"yes"},
-              {img:"/09.jpg",fly:"yes"},
-              {img:"/10.jpg",fly:"yes"},
-              {img:"/11.jpg",fly:"yes"},
-              {img:"/12.jpg",fly:"yes"},
-              {img:"/130.jpg",fly:"no"},
-              {img:"/131.jpg",fly:"no"},
-              {img:"/132.jpg",fly:"no"},
-              {img:"/134.jpg",fly:"no"},
-              {img:"/121.jpg",fly:"no"},
-              {img:"/135.jpg",fly:"no"},
-              {img:"/129.jpg",fly:"no"}
+              {img:"/01.jpg",fly:"Yes"},
+              {img:"/02.jpg",fly:"Yes"},
+              {img:"/03.jpg",fly:"Yes"},
+              {img:"/04.jpg",fly:"Yes"},
+              {img:"/05.jpg",fly:"Yes"},
+              {img:"/06.jpg",fly:"Yes"},
+              {img:"/07.jpg",fly:"Yes"},
+              {img:"/08.jpg",fly:"Yes"},
+              {img:"/09.jpg",fly:"Yes"},
+              {img:"/10.jpg",fly:"Yes"},
+              {img:"/11.jpg",fly:"Yes"},
+              {img:"/12.jpg",fly:"Yes"},
+              {img:"/130.jpg",fly:"No"},
+              {img:"/131.jpg",fly:"No"},
+              {img:"/132.jpg",fly:"No"},
+              {img:"/134.jpg",fly:"No"},
+              {img:"/121.jpg",fly:"No"},
+              {img:"/135.jpg",fly:"No"},
+              {img:"/129.jpg",fly:"No"}
             ],
             randomIndex = Math.floor(Math.random() * fileNames.length);
             this.girlAnswer();
@@ -98,7 +113,7 @@ onClick={() => this.setState({start:true},()=>this.tickImg())} >
 <>
 <div style={styles.innerDiv}>
 <div style={styles.leftDiv}>
-    <h4>can fly : {this.state.canfly}</h4>
+    <h4>Can fly : {this.state.canfly}</h4>
 <img src={this.state.image} style={styles.imgCss}></img>
 <Button variant="contained" size="medium" color="primary" style={styles.btnCss} 
 onClick={() =>this.tickImg()} >
@@ -107,48 +122,39 @@ onClick={() =>this.tickImg()} >
 
 </div>
 <Divider orientation="vertical" />
-<div>
-<img src="/girl.png" style={styles.imgCss}/>
-<img src="/boy.png" style={styles.imgCss}/>
+<div style={styles.rightDiv}>
+
+
+    <div style={{display:"flex",width   :"100%",justifyContent:"center"}}>
+        <div style={{display:"flex",width:"60%",justifyContent:"center"}}>
+<img src="/girl.png" style={styles.imgCss1}/></div>
+<div style={{display:"flex",width:"40%",flexDirection:"column"}}>
+<span>My answer : {this.state.girlAnswer}</span>
+
+{this.state.canfly === this.state.girlAnswer  ?
+<span style={{color:"green"}}>Good</span>
+:<span style={{color:"red"}}>Out</span>}
+</div>
 </div>
 
+
+
+<div style={{display:"flex",width   :"100%",justifyContent:"center"}}>
+        <div style={{display:"flex",width:"60%",justifyContent:"center"}}>
+<img src="/boy.png" style={styles.imgCss1}/></div>
+<div style={{display:"flex",width:"40%",flexDirection:"column"}}>
+<span>My answer : {this.state.boyAnswer}</span>
+{this.state.canfly === this.state.boyAnswer  ?
+<span style={{color:"green"}}>Good</span>
+:<span style={{color:"red"}}>Out</span>}
+</div>
 </div>
 
 
-
-
-        {/* <div>
-        <Button variant="contained" size="medium" color="primary" style={styles.btnCss} 
-onClick={() =>this.tickImg()} >
-          Next
-        </Button>
-<h4>can fly: {this.state.canfly}</h4>
-        <img src={this.state.image} style={styles.imgCss}></img>
-      </div>
-      <div style={styles.container}>
-
-      <div>
-          <img src="/girl.png" style={styles.imgCss}/>
-          <span>{this.state.girlans}</span>
-<span>{this.state.canfly === this.state.girlans  ? "good" : "out"}</span>
-          </div>
-
-      <div>
-      <img src="/boy.png" style={styles.imgCss}/>
-      <span>{this.state.boyans}</span>
-<span>{this.state.canfly === this.state.boyans  ? "good" :"out"}</span>
-
-      </div>
-      
-      </div> */}
+</div>
+</div>
       </>
     :null}
-
-
-
-
-
-
             </div>
         )
 
